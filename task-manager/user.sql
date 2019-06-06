@@ -16,3 +16,9 @@ SELECT * FROM users
 WHERE email = :email 
 
 
+--name: insert_task
+INSERT INTO tasks (task_name, task_desc, task_priority, `user_id`) 
+VALUES (:taskName, :taskDesc, :taskPriority, :userId)
+
+
+

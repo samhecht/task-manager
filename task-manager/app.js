@@ -88,8 +88,66 @@ app.post('/insertUser', (req, res) => {
 		}
 	}
 	insertUser();
-})
+});
 
+app.post('/login', (req, res) => {
+	const email = req.body.email;
+	const password = req.body.password;
+	async function loginUser() {
+		const user = await queries.get_user_by_email({email: email}, adapter);
+		if (user.length === 0 || user.length > 1) {
+			res.status("404").send({
+				message: "wrong username or password",
+			});
+		} else {
+			const pwd = user[0].pwd;
+			if (pwd === password) {
+				res.status("200").send({
+					message: "sucessfully logged in",
+				});
+			} else {
+				res.status("404").send({
+					message: "wrong username or password",
+				});
+			}
+		}
+	}
+	loginUser();
+});
+
+app.post('/insertTask', (req, res) => {
+	const taskName = req.body.name;
+	const taskDesc = req.body.description;
+	const taskPriority = req.body.priority;
+	const email = req.body.email;
+
+	async function insertTask() {
+		try {
+			const currUser = await queries.get_user_by_email({email: email}, adapter);
+			if (currUser === null) {
+				res.status("404").send({
+					message: "couldn't find user"
+				});
+			} else {
+				const userId = currUser[0].user_id;
+				await queries.insert_task({
+					taskName: taskName,
+					taskDesc: taskDesc,
+					taskPriority: taskPriority,
+					userId: userId,
+				}, adapter);
+				res.status("200").send({
+					message: "task inserted",
+				});
+			}
+		} catch {
+			res.status("404").send({
+				message: "couldn't find user"
+			});
+		}
+	}
+	insertTask();
+})
 app.listen(port, () => {
 	console.log("listening on port 9000");
 });
