@@ -147,6 +147,23 @@ app.post('/insertTask', (req, res) => {
 		}
 	}
 	insertTask();
+});
+
+app.post('/removeTask', (req, res) => {
+	const taskId = req.body.taskId;
+	async function removeTask() {
+		try {
+			await queries.remove_task_by_id({taskId: taskId}, adapter);
+			res.status("200").send({
+				message: "removed task",
+			});
+		} catch {
+			res.status("404").send({
+				message: "failed to remove task",
+			});
+		}
+	}
+	removeTask();
 })
 app.listen(port, () => {
 	console.log("listening on port 9000");

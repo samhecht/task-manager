@@ -20,5 +20,9 @@ WHERE email = :email
 INSERT INTO tasks (task_name, task_desc, task_priority, `user_id`) 
 VALUES (:taskName, :taskDesc, :taskPriority, :userId)
 
+--name: remove_task_by_id
+DELETE FROM tasks
+WHERE task_id = :taskId 
+
 
 
