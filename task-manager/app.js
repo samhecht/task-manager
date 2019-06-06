@@ -1,9 +1,40 @@
 const express = require('express');
 const app = express();
 const port = 9000;
+const mysql = require('mysql');
+const puresql = require('puresql');
+const cors = require('cors');
+require('dotenv').config();
+
+
+const dbPassword = process.env.REACT_APP_DB_PASSWORD;
+app.use(cors());
+
+const connection = mysql.createConnection({
+	host : 'localhost',
+	port : 3306,
+	user : 'root',
+	password : dbPassword,
+	database : 'task_manager'
+});
+
+const adapter = puresql.adapters.mysql(connection);
+const queries = puresql.loadQueries('user.sql');
 
 app.get('/', (req, res) => {
-	res.send("hello world");
+	res.send('hello world');
+});
+
+app.get('/allUsers', (req, res) => {
+	async function getAllUsers() {
+		try {
+			const users = await queries.get_all_users({}, adapter);
+			res.send(users);
+		} catch {
+			res.send('couldn\'t get users');
+		}
+	}
+	getAllUsers();
 });
 
 app.listen(port, () => {
