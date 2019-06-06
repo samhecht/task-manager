@@ -13,7 +13,7 @@ export default function App() {
     <div className="App">
 
       <Router>
-        <Route exact path="/" component={SignUp} />
+        <Route exact path="/SignUp" component={SignUp} />
         <Route exact path="/SignIn" component={SignIn} />
         <Route exact path="/CreateTask" component={CreateTask} />
         <Route exact path="/ViewTasks" component={ViewTasks} />

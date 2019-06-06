@@ -8,6 +8,9 @@ require('dotenv').config();
 
 
 const dbPassword = process.env.REACT_APP_DB_PASSWORD;
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(cors());
 
 const connection = mysql.createConnection({
@@ -36,6 +39,56 @@ app.get('/allUsers', (req, res) => {
 	}
 	getAllUsers();
 });
+
+app.get('/getTasks', (req, res) => {
+	let email = req.query.email;
+	async function getTasksByEmail() {
+		try {
+			const currUser = await queries.get_user_by_email({email: email}, adapter);
+			let uid = currUser[0].user_id;
+			const tasks = await queries.get_tasks_by_uid({userId: uid}, adapter);
+			res.send(tasks);
+		} catch {
+			return null;
+		}
+	}
+	getTasksByEmail();
+});
+
+app.post('/insertUser', (req, res) => {
+	const firstName = req.body.firstName;
+	const lastName = req.body.lastName;
+	const email = req.body.email;
+	const pwd = req.body.password;
+	async function insertUser() {
+		try {
+			// only allow one of each email
+			const alreadyExists = await queries.get_user_by_email({email: email}, adapter);
+			if (alreadyExists.length > 0) {
+				res.status("404").send({
+					message: "couldn't create user",
+				});
+			} else {
+				await queries.insert_user({
+					firstName: firstName,
+					lastName: lastName,
+					email: email,
+					pwd: pwd,
+				}, adapter);
+				console.log("shouldve inserted user");
+				res.status("200").send({
+					message: "created new user",
+				});
+			}	
+		} catch (e) {
+			console.log("couldn't add new user", e);
+			res.status("404").send({
+				message: "couldn't create user",
+			});
+		}
+	}
+	insertUser();
+})
 
 app.listen(port, () => {
 	console.log("listening on port 9000");
