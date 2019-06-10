@@ -35,53 +35,61 @@ export default function ViewTasks() {
                 .then(res => {
                     console.log(res);
                     let tempTasks = res.data.map(task => {
-                        return (
-                        <div key={task.task_id}>
-                            <Card
-                                style={{ marginTop: 16, margin: "5% 25%", }}
-                                type="inner"
-                                title={task.task_name}
-                            >
-                            <Box display='flex' flexDirection='column'>
-                                <Box display='flex' flexDirection='row' justifyContent='flex-start'>
-                                <Typography component="h5" variant="h5"> 
-                                Priority: {task.task_priority}
-                                </Typography>
-                                </Box>
-                                <Box display='flex' flexDirection='row' justifyContent='flex-start'>
-                                <Typography component="h5" variant="h5"> 
-                                Description: 
-                                </Typography>
-                                </Box>
-                                <Box display='flex' flexDirection='row' justifyContent='flex-start' marginLeft="10%">
-                                <Typography component="h6" variant="h6" display='flex'> 
-                                {task.task_desc}
-                                </Typography>
-                                </Box>
-                                <Box display='flex' flexDirection='row' justifyContent='flex-end' marginLeft="10%">
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={(event) => {deleteTask(task.task_id); event.preventDefault();}}
-                                    style={{
-                                        width: '20%',
-                                        height: '40px',
-                                        backgroundColor: '#ff0000',
-                                    }}
+                        return ({
+                            taskPriority: task.task_priority,
+                            taskHTML: (
+                                <div key={task.task_id}>
+                                <Card
+                                    style={{ marginTop: 16, margin: "5% 25%", }}
+                                    type="inner"
+                                    title={task.task_name}
                                 >
-                                    Remove
-                                </Button>
+                                <Box display='flex' flexDirection='column'>
+                                    <Box display='flex' flexDirection='row' justifyContent='flex-start'>
+                                    <Typography component="h5" variant="h5"> 
+                                    Priority: {task.task_priority}
+                                    </Typography>
+                                    </Box>
+                                    <Box display='flex' flexDirection='row' justifyContent='flex-start'>
+                                    <Typography component="h5" variant="h5"> 
+                                    Description: 
+                                    </Typography>
+                                    </Box>
+                                    <Box display='flex' flexDirection='row' justifyContent='flex-start' marginLeft="10%">
+                                    <Typography component="h6" variant="h6" display='flex'> 
+                                    {task.task_desc}
+                                    </Typography>
+                                    </Box>
+                                    <Box display='flex' flexDirection='row' justifyContent='flex-end' marginLeft="10%">
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={(event) => {deleteTask(task.task_id); event.preventDefault();}}
+                                        style={{
+                                            width: '20%',
+                                            height: '40px',
+                                            backgroundColor: '#ff0000',
+                                        }}
+                                    >
+                                        Remove
+                                    </Button>
+                                    </Box>
+                                    
                                 </Box>
-                                
-                            </Box>
-                            </Card>
+                                </Card>
 
-                        </div>
+                            </div>
+                            ),
+                        }
+                        
                         );
                     });
-                    setTasks(tempTasks);
+                    // sort by priority
+                    tempTasks.sort((a, b) => b.taskPriority - a.taskPriority);
+                    const taskDisplay = tempTasks.map(task => task.taskHTML);
+                    setTasks(taskDisplay);
                     setShouldReload(false);
                 })
                 .catch(err => {
