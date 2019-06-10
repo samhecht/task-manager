@@ -16,6 +16,7 @@ export default function ViewTasks() {
     const [currEdit, setCurrEdit] = useState(null);
     const [editPriority, setEditPriority] = useState(1);
     const [editDesc, setEditDesc] = useState("");
+    const [editStart, setEditStart] = useState(true);
 
     const deleteTask = (taskId) => {
         axios
@@ -63,6 +64,7 @@ export default function ViewTasks() {
                 setEditDesc("");
                 setCurrEdit(null);
             });
+        setEditStart(true);
         event.preventDefault();
     }
 
@@ -80,7 +82,11 @@ export default function ViewTasks() {
                     console.log(res);
                     let tempTasks = res.data.map(task => {
                         if (task.task_id === currEdit) {
-                            
+                            if (editStart) {
+                                setEditDesc(task.task_desc);
+                                setEditPriority(task.task_priority);
+                                setEditStart(false);
+                            }
                             return ({
                                 taskPriority: task.task_priority,
                                 taskHTML: (<div key={task.task_id}>
@@ -90,20 +96,30 @@ export default function ViewTasks() {
                                         title={task.task_name}
                                     >
                                     <Box display='flex' flexDirection='column'>
-                                        <Box display='flex' flexDirection='row' justifyContent='flex-start'>
+                                        <Box display='flex' flexDirection='row' justifyContent='center'>
                                         <Typography component="h6" variant="h6">
                                             Priority: 
                                         </Typography>
-                                        <Radio.Group onChange={onPriorityEdit} value={editPriority}>
+                                        <Box
+                                            display='flex'
+                                            flexDirection='column'
+                                            justifyContent='center'
+                                        >
+                                        <Radio.Group 
+                                            onChange={onPriorityEdit} 
+                                            value={editPriority}
+                                            style={{paddingLeft: "10px"}}
+                                        >
                                             <Radio value={1}>1</Radio>
                                             <Radio value={2}>2</Radio>
                                             <Radio value={3}>3</Radio>
                                             <Radio value={4}>4</Radio>
                                         </Radio.Group>
                                         </Box>
+                                        </Box>
                                     </Box>
                                     <TextField
-                                        value={editDesc}
+                                        defaultValue={task.task_desc}
                                         variant="outlined"
                                         required
                                         fullWidth
@@ -115,6 +131,7 @@ export default function ViewTasks() {
                                         rows="3"
                                         rowsMax="10"
                                         onChange={onDescEdit}
+                                        style={{margin: '2% 0'}}
                                     />
                                     <Button
                                         type="submit"
@@ -123,7 +140,7 @@ export default function ViewTasks() {
                                         color="primary"
                                         onClick={onEditTask}
                                         style={{
-                                            backgroundColor: "#E97A3A",
+                                            backgroundColor: "#62C2CC",
                                         }}
                                     >
                                         Submit Edit
@@ -219,7 +236,7 @@ export default function ViewTasks() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar loggedIn={true}/>
             <h1 style={{marginTop: '6%'}}>View Tasks</h1>
             {tasks}
         </div>

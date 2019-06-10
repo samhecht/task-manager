@@ -9,6 +9,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -116,8 +117,8 @@ export default function SignUp() {
 
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+        <Avatar className={classes.avatar} style={{backgroundColor: "#E97A3A"}}>
+          <LockOutlinedIcon style={{backgroundColor: "#E97A3A"}} />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
@@ -182,6 +183,9 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
             onClick={submitUser}
+            style={{
+              backgroundColor:"#62C2CC"
+            }}
           >
             Sign Up
           </Button>
