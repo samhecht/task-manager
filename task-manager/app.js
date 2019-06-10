@@ -90,6 +90,28 @@ app.post('/insertUser', (req, res) => {
 	insertUser();
 });
 
+app.post('/editTask', (req, res) => {
+	const taskDesc = req.body.description;
+	const taskPriority = req.body.priority;
+	const taskId = req.body.taskId;
+	async function editTask() {
+		try {
+			await queries.update_task({
+				taskPriority: taskPriority, 
+				taskDesc: taskDesc, 
+				taskId: taskId}, adapter);
+			res.status("200").send({
+				message: "Updated user in database",
+			});
+		} catch {
+			res.status("404").send({
+				message: "Couldn't update user",
+			});
+		}
+	}
+	editTask();
+});
+
 app.post('/login', (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;

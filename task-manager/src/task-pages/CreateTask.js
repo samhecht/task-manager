@@ -168,6 +168,9 @@ export default function CreateTask() {
                     color="primary"
                     className={classes.submit}
                     onClick={onSubmitTask}
+                    style={{
+                        backgroundColor: "#E97A3A"
+                    }}
                 >
                     Submit Task
                 </Button>

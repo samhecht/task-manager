@@ -24,5 +24,10 @@ VALUES (:taskName, :taskDesc, :taskPriority, :userId)
 DELETE FROM tasks
 WHERE task_id = :taskId 
 
+--name: update_task
+UPDATE tasks 
+SET task_priority = :taskPriority, task_desc = :taskDesc
+WHERE task_id = :taskId 
+
 
 
