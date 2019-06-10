@@ -25,7 +25,7 @@ function Navbar(){
     const classes = useStyles();
 
     const navBarStyle = {
-      backgroundColor: '#73C2FB',
+      backgroundColor: '#E97A3A',
       padding: "2% 1%",
     }
 

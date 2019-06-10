@@ -23,6 +23,7 @@ export default function ViewTasks() {
             .catch(() => {
                 alert("couldn't remove task")
             });
+        setShouldReload(true);
         
     }
 
@@ -53,7 +54,7 @@ export default function ViewTasks() {
                                 </Typography>
                                 </Box>
                                 <Box display='flex' flexDirection='row' justifyContent='flex-start' marginLeft="10%">
-                                <Typography component="h6" variant="h6"> 
+                                <Typography component="h6" variant="h6" display='flex'> 
                                 {task.task_desc}
                                 </Typography>
                                 </Box>
@@ -81,6 +82,7 @@ export default function ViewTasks() {
                         );
                     });
                     setTasks(tempTasks);
+                    setShouldReload(false);
                 })
                 .catch(err => {
                     console.log("Error getting tasks: ", err);
@@ -88,7 +90,7 @@ export default function ViewTasks() {
         } else {
             setShouldRedirect(true);
         }
-    }, []);
+    }, [shouldReload]);
 
     // redirect if they're not logged in
     if (shouldRedirect) {
