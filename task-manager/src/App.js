@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import SignUp from './authentication/SignUp';
+import SignIn from './authentication/SignIn';
+import CreateTask from './task-pages/CreateTask';
+import ViewTasks from './task-pages/ViewTasks';
 
-function App() {
+
+export default function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Router>
+        <Route exact path="/" component={SignUp} />
+        <Route exact path="/SignUp" component={SignUp} />
+        <Route exact path="/SignIn" component={SignIn} />
+        <Route exact path="/CreateTask" component={CreateTask} />
+        <Route exact path="/ViewTasks" component={ViewTasks} />
+      </Router>
+   
     </div>
   );
 }
 
-export default App;
