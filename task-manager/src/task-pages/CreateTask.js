@@ -134,10 +134,19 @@ export default function CreateTask() {
                         />
                     </Grid>
                     <Grid item xs={4} style={{justifyContent: 'flex-end'}}>
-                        <Typography component="h6" variant="h6">
+                        <Typography 
+                            component="h6" 
+                            variant="h6"
+                        >
                             Priority
                         </Typography>
-                        <Radio.Group onChange={onPriorityChange} value={priority}>
+                        <Radio.Group 
+                            onChange={onPriorityChange} 
+                            value={priority} 
+                            style={{
+                                marginBottom: '0',
+                            }}
+                        >
                             <Radio value={1}>1</Radio>
                             <Radio value={2}>2</Radio>
                             <Radio value={3}>3</Radio>
