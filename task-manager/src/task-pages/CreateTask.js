@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import { Radio } from 'antd';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -109,7 +110,7 @@ export default function CreateTask() {
 
     return (
         <div>
-        <Navbar />
+        <Navbar loggedIn={true}/>
             
         <Container component="main" maxWidth="sm">
 
@@ -120,7 +121,7 @@ export default function CreateTask() {
                 </Typography>
                 <form className={classes.form} noValidate>
                 <Grid container spacing={2}>
-                    <Grid item xs={8}>
+                    <Grid item xs={7}>
                         <TextField
                             value={name}
                             variant="outlined"
@@ -133,13 +134,29 @@ export default function CreateTask() {
                             onChange={onNameChange}
                         />
                     </Grid>
-                    <Grid item xs={4} style={{justifyContent: 'flex-end'}}>
+                    <Grid item xs={5} style={{justifyContent: 'flex-end'}}>
+                        <Box
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='space-between'
+                        >
+                        <Box
+                            display='flex'
+                            flexDirection='row'
+                            justifyContent='flex-start'
+                        >
                         <Typography 
                             component="h6" 
                             variant="h6"
                         >
-                            Priority
+                            Priority: 
                         </Typography>
+                        </Box>
+                        <Box
+                            display='flex'
+                            flexDirection='row'
+                            justifyContent='flex-start'
+                        >
                         <Radio.Group 
                             onChange={onPriorityChange} 
                             value={priority} 
@@ -152,6 +169,8 @@ export default function CreateTask() {
                             <Radio value={3}>3</Radio>
                             <Radio value={4}>4</Radio>
                         </Radio.Group>
+                        </Box>
+                        </Box>
                     </Grid>
                     <Grid item xs={12}>
                     <TextField
@@ -178,7 +197,7 @@ export default function CreateTask() {
                     className={classes.submit}
                     onClick={onSubmitTask}
                     style={{
-                        backgroundColor: "#E97A3A"
+                        backgroundColor: "#62C2CC"
                     }}
                 >
                     Submit Task

@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-function Navbar(){
+function Navbar(props){
     const classes = useStyles();
 
     const navBarStyle = {
@@ -33,6 +33,8 @@ function Navbar(){
       color: 'white',
       textDecoration: 'none',
     }
+
+    let loginText = props.loggedIn ? "Logout" : "Login";
 
     return (
     <div className={classes.root}>
@@ -46,7 +48,7 @@ function Navbar(){
           marginLeft="5%"
         >
           <Link style={linkStyle} to="/ViewTasks">
-            <Typography variant="h4" to="/" >
+            <Typography variant="h4" to="/" style={{color: "white"}}>
               TaskManager
             </Typography>
           </Link>
@@ -61,7 +63,15 @@ function Navbar(){
         >
           <Button color="inherit"><Link style={linkStyle} to="/ViewTasks">Task Log</Link></Button>
           <Button color="inherit"><Link style={linkStyle} to="/CreateTask">Create Task</Link></Button>
-          <Button color="inherit"><Link style={linkStyle} to="/SignIn">Login</Link></Button>
+          <Button 
+            color="inherit" 
+            onClick={() => {
+              sessionStorage.clear();
+            }}
+            
+          >
+            <Link style={linkStyle} to="/SignIn">{loginText}</Link>
+          </Button>
         </Box>
       </Box>
     </div>

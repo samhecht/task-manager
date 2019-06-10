@@ -86,8 +86,8 @@ export default function SignIn() {
 
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+        <Avatar className={classes.avatar} style={{backgroundColor: "#E97A3A"}}>
+          <LockOutlinedIcon style={{backgroundColor: "#E97A3A"}} />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
@@ -125,6 +125,10 @@ export default function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
+            style={{
+              backgroundColor:"#62C2CC"
+            }}
+            
             className={classes.submit}
             onClick={submitLogin}
           >
